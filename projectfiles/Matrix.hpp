@@ -107,4 +107,18 @@ public:
         }
         return result;
     }
+
+    // Print matrix method
+    void printMatrix() const
+    {
+        for (int i = 0; i < rows; i++)
+        {
+            std::cout << "|";
+            for (int j = 0; j < cols; j++)
+            {
+                std::cout << " " << data[i * cols + j];
+            }
+            std::cout << "| \n";
+        }
+    }
 };
