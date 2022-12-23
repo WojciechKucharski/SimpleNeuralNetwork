@@ -19,10 +19,7 @@ public:
     Matrix(int rows, int cols, double value = 0) : rows(rows), cols(cols)
     {
         data = new double[rows * cols];
-        for (int i = 0; i < rows * cols; i++)
-        {
-            data[i] = value;
-        }
+        for (int i = 0; i < rows * cols; i++) data[i] = value;
     }
 
     // Copy constructor
@@ -36,10 +33,7 @@ public:
     Matrix(int rows, int cols, double minRand, double maxRand) : rows(rows), cols(cols)
     {
         data = new double[rows * cols];
-        for (int i = 0; i < rows * cols; i++)
-        {
-            data[i] = minRand + (double)rand() / RAND_MAX * (maxRand - minRand);
-        }
+        for (int i = 0; i < rows * cols; i++) data[i] = minRand + (double)rand() / RAND_MAX * (maxRand - minRand);
     }
 
     // Destructor
@@ -77,10 +71,7 @@ public:
     Matrix operator+(const Matrix &other) const
     {
         Matrix result(rows, cols);
-        for (int i = 0; i < rows * cols; i++)
-        {
-            result.data[i] = data[i] + other.data[i];
-        }
+        for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] + other.data[i];
         return result;
     }
 
@@ -88,10 +79,7 @@ public:
     Matrix operator-(const Matrix &other) const 
     {
         Matrix result(rows, cols);
-        for (int i = 0; i < rows * cols; i++) 
-        {
-            result.data[i] = data[i] - other.data[i];
-        }
+        for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] - other.data[i];
         return result;
     }
 
@@ -117,10 +105,7 @@ public:
     Matrix operator*(double scalar) const
     {
         Matrix result(rows, cols);
-        for (int i = 0; i < rows * cols; i++)
-        {
-            result.data[i] *= result.data[i] * scalar;
-        }
+        for (int i = 0; i < rows * cols; i++) result.data[i] *= result.data[i] * scalar;
         return result;
     }
 
@@ -140,10 +125,7 @@ public:
     // Method for adding rows
     void addRows(int firstRow, int secondRow, double coeff)
     {
-        for (int i = 0; i < cols; i++)
-        {
-            (*this)(firstRow, i) += (*this)(secondRow, i) * coeff;
-        }
+        for (int i = 0; i < cols; i++) (*this)(firstRow, i) += (*this)(secondRow, i) * coeff;
     }
 
     // Print matrix method
