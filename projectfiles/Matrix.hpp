@@ -8,6 +8,7 @@ class Matrix {
 private:
     int rows;
     int cols;
+    int rowSwaps{0};
     double *data;
 
 public:
@@ -121,6 +122,28 @@ public:
             result.data[i] *= result.data[i] * scalar;
         }
         return result;
+    }
+
+    // Method for swapping rows
+    void swapRows(int firstRow, int secondRow)
+    {
+        double tmp;
+        for (int i = 0; i < cols; i++)
+        {
+            tmp = (*this)(firstRow, i);
+            (*this)(firstRow, i) = (*this)(secondRow, i);
+            (*this)(secondRow, i) = tmp;
+        }
+        rowSwaps++;
+    }
+
+    // Method for adding rows
+    void addRows(int firstRow, int secondRow, double coeff)
+    {
+        for (int i = 0; i < cols; i++)
+        {
+            (*this)(firstRow, i) += (*this)(secondRow, i) * coeff;
+        }
     }
 
     // Print matrix method

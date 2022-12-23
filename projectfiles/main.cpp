@@ -10,11 +10,10 @@ int main(){
     network.push_back({5,2,2});
     network.push_back({2,3,3});
     network.push_back({3,1,4});
-    Matrix a = network[0];
+    Matrix a{3,3,1};
     a.printMatrix();
-    a = a * network[1];
+    a.addRows(0,1,-1);
     a.printMatrix();
-    a = a * network[2];
-    a.printMatrix();
+    
     return 0;
 }
