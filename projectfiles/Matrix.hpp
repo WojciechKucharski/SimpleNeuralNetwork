@@ -128,6 +128,20 @@ public:
         for (int i = 0; i < cols; i++) (*this)(firstRow, i) += (*this)(secondRow, i) * coeff;
     }
 
+    // Transpose Method
+    Matrix transpose() const
+    {
+        Matrix result(cols, rows);
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < cols; j++)
+            {
+                result(j, i) = (*this)(i, j);
+            }
+        }
+        return result;
+    }
+
     // Print matrix method
     void printMatrix() const
     {
