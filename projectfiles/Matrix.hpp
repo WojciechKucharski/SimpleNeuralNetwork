@@ -3,6 +3,7 @@
 #include <cstring>
 #include <algorithm>
 #include <random>
+#include <cmath>
 
 class Matrix {
 private:
@@ -140,6 +141,46 @@ public:
             }
         }
         return result;
+    }
+
+    // Det calculation
+    double det() const
+    {
+        Matrix dummy = *this;
+        double det = 1;
+        int n = cols;
+
+        for (int i = 0; i < n; i++) 
+        {
+            int pivot = i;
+            for (int j = i + 1; j < n; j++)
+            {
+                if (abs(dummy(j,i)) > abs(dummy(pivot,i)))
+                {
+                    pivot = j;
+                }
+            }
+            if (pivot != i) {
+                det *= -1;
+                for (int j = 0; j < n; j++)
+                {
+                    std::swap(dummy(j,i), dummy(pivot,j));
+                }
+            }
+            if (abs(dummy(i,i)) < 1e-9) {
+                return 0;
+            }
+            det *= dummy(i,i);
+            for (int j = i + 1; j < n; j++) 
+            {
+                double ratio = dummy(j,i) / dummy(i,i);
+                for (int k = i; k < n; k++) 
+                {
+                    dummy(j,k) -= ratio * dummy(i,k);
+                }
+            }
+        }
+    return det;
     }
 
     // Print matrix method
