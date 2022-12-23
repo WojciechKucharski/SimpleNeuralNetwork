@@ -6,7 +6,7 @@ using namespace std;
 
 int main(){
     vector<Matrix> network;
-    network.push_back({5,5,1});
+    network.push_back({5,5,-1,1});
     network.push_back({5,2,2});
     network.push_back({2,3,3});
     network.push_back({3,1,4});

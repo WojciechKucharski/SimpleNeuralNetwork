@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cstring>
 #include <algorithm>
+#include <random>
 
 class Matrix {
 private:
@@ -28,6 +29,16 @@ public:
     {
         data = new double[rows * cols];
         std::memcpy(data, other.data, rows * cols * sizeof(double));
+    }
+
+    // Random constructor
+    Matrix(int rows, int cols, double minRand, double maxRand) : rows(rows), cols(cols)
+    {
+        data = new double[rows * cols];
+        for (int i = 0; i < rows * cols; i++)
+        {
+            data[i] = minRand + (double)rand() / RAND_MAX * (maxRand - minRand);
+        }
     }
 
     // Destructor
