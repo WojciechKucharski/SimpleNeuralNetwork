@@ -14,9 +14,13 @@ public:
     Matrix() : rows(0), cols(0), data(nullptr) {}
 
     // Constructor with size specified
-    Matrix(int rows, int cols) : rows(rows), cols(cols)
+    Matrix(int rows, int cols, double value = 0) : rows(rows), cols(cols)
     {
         data = new double[rows * cols];
+        for (int i = 0; i < rows * cols; i++)
+        {
+            data[i] = value;
+        }
     }
 
     // Copy constructor
