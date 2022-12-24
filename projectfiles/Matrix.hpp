@@ -183,6 +183,39 @@ public:
     return det;
     }
 
+    //Min Max
+    double maxValue() const
+    {
+        double maxvalue = data[0];
+        for(int i = 1; i < rows * cols; i++)
+        {
+            if (data[i] > maxvalue) maxvalue = data[i];
+        }
+        return maxvalue;
+    }
+
+    //Min Max
+    double minValue() const
+    {
+        double minvalue = data[0];
+        for(int i = 1; i < rows * cols; i++)
+        {
+            if (data[i] < minvalue) minvalue = data[i];
+        }
+        return minvalue;
+    }
+
+    //Normalise
+    void normalise()
+    {
+        double min = minValue();
+        double max = maxValue();
+        min = min < 0 ? -min : min;
+        double coeff = min > max ? min : max;
+
+        for (int i = 0; i < rows * cols; i++) data[i] /= coeff;
+    }
+
     // Print matrix method
     void printMatrix() const
     {
