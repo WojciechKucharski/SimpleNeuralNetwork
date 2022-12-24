@@ -5,12 +5,11 @@
 using namespace std;
 
 int main(){
-    vector<Matrix> network;
-    Matrix a{2,2,1};
-    a(1,1) = -10;
-    a.normalise();
-    a.printMatrix();
     
+    Matrix b = Matrix({{1.0,1.0},{1.0,3.0}});
+    b.printMatrix();
+    
+
     
     
     return 0;

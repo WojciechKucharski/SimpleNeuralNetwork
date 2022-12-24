@@ -37,6 +37,21 @@ public:
         for (int i = 0; i < rows * cols; i++) data[i] = minRand + (double)rand() / RAND_MAX * (maxRand - minRand);
     }
 
+    // Constructor from initializer list
+    Matrix(std::initializer_list<std::initializer_list<double>> other) : rows(other.size()), cols((*other.begin()).size())
+    {
+        data = new double[rows * cols];
+        int i = 0;
+        for(auto it1 = other.begin(); it1 != other.end(); it1++)
+        {
+            for(auto it2 = (*it1).begin(); it2 != (*it1).end(); it2++)
+            {
+                data[i] = *it2;
+                i++;
+            }
+        }
+    }
+
     // Destructor
     ~Matrix() {
         delete[] data;
