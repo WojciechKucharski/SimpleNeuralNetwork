@@ -5,9 +5,9 @@
 using namespace std;
 
 int main(){
-    
+    Matrix a = Matrix({{1.0,1.0},{2.0,3.0}});
     Matrix b = Matrix({{1.0,1.0},{1.0,3.0}});
-    b.printMatrix();
+    if(a==b) cout << "equal";
     
 
     

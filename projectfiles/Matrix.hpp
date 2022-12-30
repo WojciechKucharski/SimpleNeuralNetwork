@@ -125,6 +125,15 @@ public:
         return result;
     }
 
+    // Compare operator
+    bool operator==(const Matrix &other) const 
+    {
+        if (rows != other.rows || cols != other.rows) return false;
+        for (int i = 0; i < rows * cols; i++)
+            if (data[i] != other.data[i]) return false;
+        return true;
+    }
+
     // Method for swapping rows
     void swapRows(int firstRow, int secondRow)
     {
