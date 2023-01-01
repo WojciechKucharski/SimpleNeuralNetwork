@@ -8,9 +8,9 @@ set(exe_sources
 )
 
 set(headers
-    include/project/tmp.hpp
+    include/project/Matrix.hpp
 )
 
 set(test_sources
-  src/tmp_test.cpp
+  src/Matrix_test.cpp
 )
