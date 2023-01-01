@@ -1,5 +1,5 @@
 set(sources
-    src/tmp.cpp
+    src/main.cpp
 )
 
 set(exe_sources
@@ -8,7 +8,7 @@ set(exe_sources
 )
 
 set(headers
-    include/project/Matrix.hpp
+    include/SimpleNeuralNetwork/Matrix.hpp
 )
 
 set(test_sources
