@@ -45,5 +45,6 @@
         "algorithm": "cpp",
         "random": "cpp",
         "vector": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }
