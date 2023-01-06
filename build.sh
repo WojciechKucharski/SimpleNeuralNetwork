@@ -4,5 +4,5 @@ cmake .. -DCMAKE_INSTALL_PREFIX=/absolute/path/to/custom/install/directory | gre
 cmake --build . --target install | grep "err"
 cmake --build build --target install --config Release | grep "err"
 echo "--- Testing ---"
-ctest -C Release --output-on-failure >> ../Testing/Temporary/test_output.txt
+ctest -C Release --output-on-failure
 cd ..

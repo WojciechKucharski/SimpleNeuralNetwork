@@ -15,6 +15,11 @@ private:
     double *data;
 
 public:
+    // Size getters
+    int getRows() const {return rows;}
+    int getCols() const {return cols;}
+    bool isEmpty() const {return data == nullptr ? true : false;}
+
     // Default constructor
     Matrix() : rows(0), cols(0), data(nullptr) {}
 
@@ -130,7 +135,7 @@ public:
     // Compare operator
     bool operator==(const Matrix &other) const 
     {
-        if (rows != other.rows || cols != other.rows) return false;
+        if (rows != other.rows || cols != other.cols) return false;
         for (int i = 0; i < rows * cols; i++)
             if (data[i] != other.data[i]) return false;
         return true;
@@ -254,6 +259,12 @@ public:
             }
             std::cout << "| \n";
         }
+    }
+    void printInfo() const
+    {
+        std::cout<<"Matix Info:\n";
+        std::cout<<"Cols: " << cols << ", Rows: " << rows <<std::endl;
+        std::cout<<"Max " << this->maxValue() << ", Min: " << this->minValue()<<std::endl;
     }
 };
 
