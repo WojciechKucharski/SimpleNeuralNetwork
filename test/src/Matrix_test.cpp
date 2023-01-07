@@ -1,6 +1,8 @@
 #include "SimpleNeuralNetwork/Matrix.hpp"
-
+#include <cstdlib>
 #include <gtest/gtest.h>
+
+double tol = 0.001;
 
 TEST(TC0, TC0)
 {
@@ -102,9 +104,26 @@ TEST(TC9, TC9)
 
 TEST(TC10, TC10)
 {
-  Matrix a = {{0,0,0},{0,0,0},{0,0,0}};
+  Matrix a = {3,3,1};
+  Matrix b = {3,3,2};
+  a = a * 2;
+  ASSERT_TRUE(a==b);
+}
+
+TEST(TC101, TC101)
+{
+  Matrix a = {3,3,2};
+  Matrix b = {3,3,3};
+  a = a + 1;
+  ASSERT_TRUE(a==b);
+}
+
+TEST(TC102, TC102)
+{
+  Matrix a = {3,3,1};
   Matrix b = {3,3,0};
-  ASSERT_EQ(a, b);
+  a = a - 1;
+  ASSERT_TRUE(a==b);
 }
 
 TEST(TC11, TC11)
@@ -138,8 +157,68 @@ TEST(TC14, TC14)
   ASSERT_TRUE(a==b);
 }
 
+TEST(TC15, TC15)
+{
+  Matrix a{3,3,1};
+  double det = a.det();
+  double realDet = 0;
+  ASSERT_LE(abs(realDet-det), tol);
+}
+
+TEST(TC16, TC16)
+{
+  Matrix a{{{1,1,1},{1,1,2},{2,1,1}}};
+  double det = a.det();
+  double realDet = 1;
+  ASSERT_LE(abs(realDet-det), tol);
+}
+
+TEST(TC17, TC17)
+{
+  Matrix a = {{0.86033026,0.80277411,0.23985895},
+              {0.16578023,0.29882813,0.60257004},
+              {0.43159065,0.48890888,0.0841036,}};
+  double det = a.det();
+  double realDet = -0.045747183704252264;
+  ASSERT_LE(abs(realDet-det), tol);
+}
+
+TEST(TC18, TC18)
+{
+  Matrix a = {{0.4504897,0.02011534},
+              {0.86118024,0.20210932}};
+  double det = a.det();
+  double realDet = 0.07372523508513454;
+  ASSERT_LE(abs(realDet-det), tol);
+}
+
+TEST(TC19, TC19)
+{
+  Matrix a = {{0.62608542,0.62161827,0.98608784,0.13174803,0.52651388},
+              {0.14826408,0.05140118,0.89620813,0.57197085,0.31077571},
+              {0.67955787,0.99196868,0.76910558,0.38292731,0.89164895},
+              {0.902972,0.63296968,0.35539502,0.05036292,0.84566413},
+              {0.2078268,0.03903877,0.58439455,0.08770039,0.23954624}};
+  double det = a.det();
+  double realDet = -0.023511663587473874;
+  ASSERT_LE(abs(realDet-det), tol);
+}
+
 int main(int argc, char **argv)
 {
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }
+
+
+/*
+import numpy as np
+n = 3
+a = np.random.rand(n,n)
+A = str(a).replace("\n","").replace(" ",",").replace("[","{").replace("]","}")
+
+print(f"Matrix a = {A};")
+print("double det = a.det();")
+print(f"double realDet = {np.linalg.det(a)};")
+print("ASSERT_LE(abs(realDet-det), tol);")
+*/

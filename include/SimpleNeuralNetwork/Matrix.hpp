@@ -106,6 +106,22 @@ public:
         return result;
     }
 
+    // Addition operator
+    Matrix operator+(double scalar) const
+    {
+        Matrix result(rows, cols);
+        for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] + scalar;
+        return result;
+    }
+
+    // Subtraction operator
+    Matrix operator-(double scalar) const 
+    {
+        Matrix result(rows, cols);
+        for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] - scalar;
+        return result;
+    }
+
     // Multiplication operator
     Matrix operator*(const Matrix &other) const
     {
@@ -128,7 +144,7 @@ public:
     Matrix operator*(double scalar) const
     {
         Matrix result(rows, cols);
-        for (int i = 0; i < rows * cols; i++) result.data[i] *= result.data[i] * scalar;
+        for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] * scalar;
         return result;
     }
 
@@ -177,41 +193,26 @@ public:
     // Det calculation
     double det() const
     {
+        if(rows==1 || cols==1) return data[0];
         Matrix dummy = *this;
-        double det = 1;
-        int n = cols;
+        double factor, det = 1;
+        int h;
 
-        for (int i = 0; i < n; i++) 
-        {
-            int pivot = i;
-            for (int j = i + 1; j < n; j++)
-            {
-                if (abs(dummy(j,i)) > abs(dummy(pivot,i)))
-                {
-                    pivot = j;
-                }
-            }
-            if (pivot != i) {
-                det *= -1;
-                for (int j = 0; j < n; j++)
-                {
-                    std::swap(dummy(j,i), dummy(pivot,j));
-                }
-            }
-            if (abs(dummy(i,i)) < 1e-9) {
-                return 0;
-            }
-            det *= dummy(i,i);
-            for (int j = i + 1; j < n; j++) 
-            {
-                double ratio = dummy(j,i) / dummy(i,i);
-                for (int k = i; k < n; k++) 
-                {
-                    dummy(j,k) -= ratio * dummy(i,k);
-                }
+        for(int i = 0; i < rows - 1; i++){
+            for(int j = 1; j < rows - i; j++){
+                h = 1;
+                while(dummy(i, i) == 0.0){
+                    if(i == rows - h) return 0;
+                    dummy.swapRows(i, rows - h);
+                    h++;
+                    }
+                factor = dummy(i+j, i) / dummy(i, i);
+                dummy.addRows(i + j, i, -factor);
             }
         }
-    return det;
+        
+        for(int i = 0; i < rows; i++) det *= dummy(i, i);
+        return det * (dummy.rowSwaps % 2 ? -1 : 1);
     }
 
     //Min Max
