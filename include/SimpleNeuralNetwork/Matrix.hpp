@@ -15,7 +15,6 @@ private:
     double *data;
 
 public:
-    // Size getters
     int getRows() const {return rows;}
     int getCols() const {return cols;}
     bool isEmpty() const {return data == nullptr ? true : false;}
@@ -74,7 +73,6 @@ public:
         }
     }
 
-    // Destructor
     ~Matrix() {
         delete[] data;
     } 
@@ -172,7 +170,6 @@ public:
         return true;
     }
 
-    // Method for swapping rows
     void swapRows(int firstRow, int secondRow)
     {
         double tmp;
@@ -199,19 +196,17 @@ public:
         for(int i = 0; i < rows; i++) result(i, 0) = (*this)(i, row);
         return result;
     }  
-    // Method for adding rows
+
     void addRows(int firstRow, int secondRow, double factor)
     {
         for (int i = 0; i < cols; i++) (*this)(firstRow, i) += (*this)(secondRow, i) * factor;
     }
 
-    // Method for multiplying rows
     void mulRow(int row, double factor)
     {
         for (int i = 0; i < cols; i++) (*this)(row, i) *= factor;
     }
 
-    // Transpose Method
     Matrix transpose() const
     {
         Matrix result(cols, rows);
@@ -225,7 +220,6 @@ public:
         return result;
     }
 
-    // Det calculation
     double det() const
     {
         if(rows==1 || cols==1) return data[0];
@@ -250,7 +244,6 @@ public:
         return det * (dummy.rowSwaps % 2 ? -1 : 1);
     }
 
-    // Reversed Matrix
     Matrix reversed() const
     {
         Matrix dummy = *this;
@@ -292,7 +285,6 @@ public:
         return result;
     }
 
-    //Min Max
     double maxValue() const
     {
         double maxvalue = data[0];
@@ -303,7 +295,6 @@ public:
         return maxvalue;
     }
 
-    //Min Max
     double minValue() const
     {
         double minvalue = data[0];
@@ -314,7 +305,6 @@ public:
         return minvalue;
     }
 
-    //Normalise
     void normalise()
     {
         double min = minValue();
@@ -325,7 +315,6 @@ public:
         for (int i = 0; i < rows * cols; i++) data[i] /= coeff;
     }
 
-    // Sum
     double sum() const
     {
         double result = 0;
@@ -333,7 +322,6 @@ public:
         return result;
     }
 
-    // Print matrix method
     void printMatrix() const
     {
         for (int i = 0; i < rows; i++)
