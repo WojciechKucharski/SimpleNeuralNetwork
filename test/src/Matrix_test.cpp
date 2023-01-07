@@ -157,6 +157,14 @@ TEST(TC14, TC14)
   ASSERT_TRUE(a==b);
 }
 
+TEST(TC141, TC141)
+{
+  Matrix a{{{1,2,3},{1,2,3},{1,2,3}}};
+  a.mulRow(2, 2);
+  Matrix b{{{1,2,3},{1,2,3},{2,4,6}}};
+  ASSERT_TRUE(a==b);
+}
+
 TEST(TC15, TC15)
 {
   Matrix a{3,3,1};
@@ -201,7 +209,7 @@ TEST(TC19, TC19)
               {0.2078268,0.03903877,0.58439455,0.08770039,0.23954624}};
   double det = a.det();
   double realDet = -0.023511663587473874;
-  ASSERT_LE(abs(realDet-det), tol);
+  ASSERT_LE(abs(realDet-det), -1);
 }
 
 int main(int argc, char **argv)

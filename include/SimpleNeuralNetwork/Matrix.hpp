@@ -62,7 +62,7 @@ public:
     // Destructor
     ~Matrix() {
         delete[] data;
-    }
+    } 
 
     // Access element at specified row and column
     double& operator()(int row, int col) 
@@ -171,9 +171,15 @@ public:
     }
 
     // Method for adding rows
-    void addRows(int firstRow, int secondRow, double coeff)
+    void addRows(int firstRow, int secondRow, double factor)
     {
-        for (int i = 0; i < cols; i++) (*this)(firstRow, i) += (*this)(secondRow, i) * coeff;
+        for (int i = 0; i < cols; i++) (*this)(firstRow, i) += (*this)(secondRow, i) * factor;
+    }
+
+    // Method for multiplying rows
+    void mulRow(int row, double factor)
+    {
+        for (int i = 0; i < cols; i++) (*this)(row, i) *= factor;
     }
 
     // Transpose Method
@@ -213,6 +219,48 @@ public:
         
         for(int i = 0; i < rows; i++) det *= dummy(i, i);
         return det * (dummy.rowSwaps % 2 ? -1 : 1);
+    }
+
+    // Reversed Matrix
+    Matrix reversed() const
+    {
+        Matrix dummy = *this;
+        Matrix result = {rows, cols, 0};
+        for(int i = 0; i < rows; i++) result(i,i) = 1;
+        double factor;
+        int h;
+
+        for(int i = 0; i < rows - 1; i++){
+            for(int j = 1; j < rows - i; j++)
+            {
+                h = 1;
+                while(dummy(i, i) == 0.0){
+                    if(i == rows - h) return {rows, cols, 0};
+                    dummy.swapRows(i, rows - h);
+                    result.swapRows(i, rows - h);
+                    h++;
+                    }
+                factor = dummy(i+j, i) / dummy(i, i);
+                dummy.addRows(i + j, i, -factor);
+                result.addRows(i + j, i, -factor);
+            }
+        }
+        for(int i = 0; i < rows; i++)
+        {
+            factor = dummy(i,i);
+            dummy.mulRow(i, 1/factor);
+            result.mulRow(i, 1/factor);
+        }
+        for(int i = rows - 1; i > 0; i--)
+        {
+            for(int j = 0; j < i; j++)
+            {
+                factor = dummy(j, i) / dummy(i, i);
+                dummy.addRows(j, i, -factor);
+                result.addRows(j, i, -factor);
+            }
+        }
+        return result;
     }
 
     //Min Max
