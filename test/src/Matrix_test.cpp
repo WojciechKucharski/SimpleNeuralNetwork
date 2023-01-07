@@ -10,6 +10,13 @@ TEST(TC0, TC0)
   ASSERT_EQ(a.getCols(), 0);
   ASSERT_EQ(a.getRows(), 0);
   ASSERT_EQ(a.isEmpty(), 1);
+  ASSERT_EQ(a.isValid(), 0);
+  Matrix b = {3,3,3};
+  Matrix c = {3,2,1};
+  ASSERT_TRUE(b.isSquare());
+  ASSERT_FALSE(c.isSquare());
+  ASSERT_EQ(b.isEmpty(), 0);
+  ASSERT_EQ(b.isValid(), 1);
 }
 
 TEST(TC1, TC1)
@@ -209,7 +216,53 @@ TEST(TC19, TC19)
               {0.2078268,0.03903877,0.58439455,0.08770039,0.23954624}};
   double det = a.det();
   double realDet = -0.023511663587473874;
-  ASSERT_LE(abs(realDet-det), -1);
+  ASSERT_LE(abs(realDet-det), tol);
+}
+
+TEST(TC20, TC20)
+{
+  Matrix a = {3,3,0};
+  Matrix b = {3,4,0};
+  Matrix c = {3,3,0,3};
+  for(int i = 0; i < 3; i++) a(i,i) = 1;
+  ASSERT_TRUE(a.isIdentity());
+  ASSERT_FALSE(b.isIdentity());
+  ASSERT_FALSE(c.isIdentity());
+}
+
+TEST(TC21, TC21)
+{
+  Matrix a = {3,3,1};
+  Matrix b = {3,1,1};
+  Matrix c = {1,3,1};
+  a(2,2) = 2;
+  b(2,0) = 2;
+  c(0,2) = 2;
+  ASSERT_TRUE(c == a.getRow(2));
+  ASSERT_TRUE(b == a.getCol(2));
+}
+
+TEST(TC22, TC22)
+{
+  Matrix a = {3,3,3};
+  ASSERT_EQ(a.sum(), 3*3*3);
+  Matrix b = {5,1,2};
+  ASSERT_EQ(b.sum(), 5*1*2);
+}
+
+TEST(TC23, TC23)
+{
+  Matrix a = {{0.86033026,0.80277411,0.23985895},
+              {0.16578023,0.29882813,0.60257004},
+              {0.43159065,0.48890888,0.0841036,}};
+  Matrix b = a * a.reversed();
+  ASSERT_TRUE(b.isIdentity());
+}
+
+TEST(TC24, TC24)
+{
+  Matrix a = {10001,10001,1};
+  ASSERT_EQ(a(10000,1000), 1);
 }
 
 int main(int argc, char **argv)

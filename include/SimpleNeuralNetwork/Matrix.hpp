@@ -6,7 +6,7 @@
 #include <algorithm>
 #include <random>
 #include <cmath>
-
+#include <cstdlib>
 class Matrix {
 private:
     int rows;
@@ -19,6 +19,21 @@ public:
     int getRows() const {return rows;}
     int getCols() const {return cols;}
     bool isEmpty() const {return data == nullptr ? true : false;}
+    bool isValid() const {return !isEmpty() && rows > 0 && cols > 0;}
+    bool isSquare() const {return isValid() && rows == cols;}
+    bool isIdentity(double tol = 0.001) const
+    {
+        if(!isSquare()) return false;
+        for(int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < cols; j++)
+            {
+                if((i == j)){if((abs((*this)(i,j)-1) > tol)) return false;}
+                else if((abs((*this)(i,j)) > tol)) return false;
+            }
+        }
+        return true;
+    }
 
     // Default constructor
     Matrix() : rows(0), cols(0), data(nullptr) {}
@@ -170,6 +185,20 @@ public:
         rowSwaps++;
     }
 
+    // Vector getters
+    Matrix getRow(int row) const
+    {
+        Matrix result = {1, cols, 0};
+        for(int i = 0; i < cols; i++) result(0, i) = (*this)(row, i);
+        return result;
+    }
+
+    Matrix getCol(int row) const
+    {
+        Matrix result = {rows, 1, 0};
+        for(int i = 0; i < rows; i++) result(i, 0) = (*this)(i, row);
+        return result;
+    }  
     // Method for adding rows
     void addRows(int firstRow, int secondRow, double factor)
     {
@@ -296,6 +325,14 @@ public:
         for (int i = 0; i < rows * cols; i++) data[i] /= coeff;
     }
 
+    // Sum
+    double sum() const
+    {
+        double result = 0;
+        for(int i = 0; i < rows * cols; i++) result += data[i];
+        return result;
+    }
+
     // Print matrix method
     void printMatrix() const
     {
@@ -311,8 +348,8 @@ public:
     }
     void printInfo() const
     {
-        std::cout<<"Matix Info:\n";
-        std::cout<<"Cols: " << cols << ", Rows: " << rows <<std::endl;
+        std::cout<<"Matrix Info:\n";
+        std::cout<< "Rows: " << rows <<", Cols: " << cols <<std::endl;
         std::cout<<"Max " << this->maxValue() << ", Min: " << this->minValue()<<std::endl;
     }
 };
