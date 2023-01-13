@@ -265,6 +265,12 @@ TEST(TC24, TC24)
   ASSERT_EQ(a(10000,1000), 1);
 }
 
+TEST(TC25, TC25)
+{
+  Matrix a = {3,3,3};
+  EXPECT_THROW(a(3,3), std::out_of_range);
+}
+
 int main(int argc, char **argv)
 {
   ::testing::InitGoogleTest(&argc, argv);

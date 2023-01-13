@@ -7,6 +7,7 @@
 #include <random>
 #include <cmath>
 #include <cstdlib>
+#include <stdexcept>
 class Matrix {
 private:
     int rows;
@@ -80,13 +81,23 @@ public:
     // Access element at specified row and column
     double& operator()(int row, int col) 
     {
+        isIndexValid(row, col);
         return data[row * cols + col];
     }
 
     // Access element at specified row and column (const version)
     const double& operator()(int row, int col) const 
     {
+        isIndexValid(row, col);
         return data[row * cols + col];
+    }
+
+    void isIndexValid(int i, int j) const
+    {
+        if ((i < 0 || j < 0) || (i >= rows || j >= cols))
+        {
+            throw std::out_of_range("Matrix index (" + std::to_string(i) + ", " + std::to_string(j) + ") out of range, Matrix size (" + std::to_string(rows) + ", " + std::to_string(cols) + ")");
+        }
     }
 
     // Assignment operator
