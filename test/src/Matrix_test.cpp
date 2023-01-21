@@ -265,7 +265,19 @@ TEST(TC24, TC24)
   ASSERT_EQ(a(10000,1000), 1);
 }
 
+double foo(double x) 
+  {
+    return 0;
+  }
+
 TEST(TC25, TC25)
+{
+  Matrix a = {1000,1000,-1,1};
+  a.applyFunc(&foo);
+  ASSERT_EQ(a.sum(), 0);
+}
+
+TEST(TC26, TC26)
 {
   Matrix a = {3,3,3};
   EXPECT_THROW(a(3,3), std::out_of_range);

@@ -117,6 +117,9 @@ public:
     // Addition operator
     Matrix operator+(const Matrix &other) const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        if(!other.isValid()) throw std::logic_error("Matrix not valid");
+        if(rows != other.rows || cols != other.cols) throw std::logic_error("Cant add matrices (" + std::to_string(rows) + ", " + std::to_string(cols) + "), (" + std::to_string(other.rows) + ", " + std::to_string(other.cols) + ")");
         Matrix result(rows, cols);
         for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] + other.data[i];
         return result;
@@ -125,6 +128,9 @@ public:
     // Subtraction operator
     Matrix operator-(const Matrix &other) const 
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        if(!other.isValid()) throw std::logic_error("Matrix not valid");
+        if(rows != other.rows || cols != other.cols) throw std::logic_error("Cant subtract matrices (" + std::to_string(rows) + ", " + std::to_string(cols) + "), (" + std::to_string(other.rows) + ", " + std::to_string(other.cols) + ")");
         Matrix result(rows, cols);
         for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] - other.data[i];
         return result;
@@ -133,6 +139,7 @@ public:
     // Addition operator
     Matrix operator+(double scalar) const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
         Matrix result(rows, cols);
         for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] + scalar;
         return result;
@@ -141,6 +148,7 @@ public:
     // Subtraction operator
     Matrix operator-(double scalar) const 
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
         Matrix result(rows, cols);
         for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] - scalar;
         return result;
@@ -149,6 +157,9 @@ public:
     // Multiplication operator
     Matrix operator*(const Matrix &other) const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        if(!other.isValid()) throw std::logic_error("Matrix not valid");
+        if(cols != other.rows) throw std::logic_error("Cant multipy matrices (" + std::to_string(rows) + ", " + std::to_string(cols) + "), (" + std::to_string(other.rows) + ", " + std::to_string(other.cols) + ")");
         Matrix result(rows, other.cols);
         for (int i = 0; i < rows; i++)
         {
@@ -167,6 +178,7 @@ public:
     // Scalar multiplication operator
     Matrix operator*(double scalar) const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
         Matrix result(rows, cols);
         for (int i = 0; i < rows * cols; i++) result.data[i] = data[i] * scalar;
         return result;
@@ -183,6 +195,9 @@ public:
 
     void swapRows(int firstRow, int secondRow)
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        isIndexValid(firstRow, 0);
+        isIndexValid(secondRow, 0);
         double tmp;
         for (int i = 0; i < cols; i++)
         {
@@ -196,6 +211,8 @@ public:
     // Vector getters
     Matrix getRow(int row) const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        isIndexValid(row, 0);
         Matrix result = {1, cols, 0};
         for(int i = 0; i < cols; i++) result(0, i) = (*this)(row, i);
         return result;
@@ -203,6 +220,8 @@ public:
 
     Matrix getCol(int row) const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        isIndexValid(0, row);
         Matrix result = {rows, 1, 0};
         for(int i = 0; i < rows; i++) result(i, 0) = (*this)(i, row);
         return result;
@@ -210,16 +229,22 @@ public:
 
     void addRows(int firstRow, int secondRow, double factor)
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        isIndexValid(firstRow, 0);
+        isIndexValid(secondRow, 0);
         for (int i = 0; i < cols; i++) (*this)(firstRow, i) += (*this)(secondRow, i) * factor;
     }
 
     void mulRow(int row, double factor)
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        isIndexValid(row, 0);
         for (int i = 0; i < cols; i++) (*this)(row, i) *= factor;
     }
 
     Matrix transpose() const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
         Matrix result(cols, rows);
         for (int i = 0; i < rows; i++)
         {
@@ -233,6 +258,8 @@ public:
 
     double det() const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        if(!isSquare()) throw std::logic_error("Determinient only for Square Matrix");
         if(rows==1 || cols==1) return data[0];
         Matrix dummy = *this;
         double factor, det = 1;
@@ -257,6 +284,8 @@ public:
 
     Matrix reversed() const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        if(!isSquare()) throw std::logic_error("Reversion only for Square Matrix");
         Matrix dummy = *this;
         Matrix result = {rows, cols, 0};
         for(int i = 0; i < rows; i++) result(i,i) = 1;
@@ -298,6 +327,7 @@ public:
 
     double maxValue() const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
         double maxvalue = data[0];
         for(int i = 1; i < rows * cols; i++)
         {
@@ -308,6 +338,7 @@ public:
 
     double minValue() const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
         double minvalue = data[0];
         for(int i = 1; i < rows * cols; i++)
         {
@@ -318,6 +349,7 @@ public:
 
     void normalise()
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
         double min = minValue();
         double max = maxValue();
         min = min < 0 ? -min : min;
@@ -328,9 +360,16 @@ public:
 
     double sum() const
     {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
         double result = 0;
         for(int i = 0; i < rows * cols; i++) result += data[i];
         return result;
+    }
+
+    void applyFunc(double (*funcPtr)(double))
+    {
+        if(!isValid()) throw std::logic_error("Matrix not valid");
+        for(int i = 0; i < rows * cols; i++) data[i] = funcPtr(data[i]);
     }
 
     void printMatrix() const

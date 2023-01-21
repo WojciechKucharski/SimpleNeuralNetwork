@@ -9,8 +9,10 @@ set(exe_sources
 
 set(headers
     include/SimpleNeuralNetwork/Matrix.hpp
+    include/SimpleNeuralNetwork/Model.hpp
 )
 
 set(test_sources
   src/Matrix_test.cpp
+  src/Model_test.cpp
 )
