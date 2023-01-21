@@ -44,7 +44,8 @@
         "xutility": "cpp",
         "algorithm": "cpp",
         "random": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "chrono": "cpp"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }
